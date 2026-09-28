@@ -1,0 +1,26 @@
+version: '3.8'
+
+services:
+  binalib-app:
+    image: php:8.2-apache
+    container_name: binalib
+    restart: unless-stopped
+    ports:
+      - "8080:80"
+    volumes:
+      - binalib_data:/var/www/html
+
+  # Layanan tambahan untuk mengunggah file lewat browser
+  file-manager:
+    image: filebrowser/filebrowser:latest
+    container_name: binalib_filemanager
+    restart: unless-stopped
+    ports:
+      - "8081:80"
+    volumes:
+      - binalib_data:/srv
+      - filebrowser_db:/database
+
+volumes:
+  binalib_data:
+  filebrowser_db:
